@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ejercicios</title>
+</head>
+<body  style="background-color: rgb(15, 111, 213);">
+    <h1>Ejercicios JavaScript</h1>
+
+    <button onclick="mostrar('astronomia')">Astronomía</button>
+    <button onclick="mostrar('medioambiente')">Medio Ambiente</button>
+    <button onclick="mostrar('salud')">Salud</button>
+
+    <hr>
+
+    <div id="astronomia" style="display:none;">
+        <h2>Astronomía</h2>
+        <h3>1. Clasificación de brillo estelar (IF)</h3>
+        <input type="number" id="magnitud" placeholder=" magnitud">
+        <button onclick="clasificarBrillo()">Clasificar</button>
+        <p id="resultadoBrillo"></p>
+
+        <h3>2. Promedio de distancias de planetas (FOR)</h3>
+        <input type="number" id="numPlanetas" placeholder="Numero de planetas">
+        <button onclick="promedioDistancias()">calcular promedio</button>
+        <p id="resultadoDistancias"></p>
+
+        <h3>3. Contar cráteres grandes (WHILE)</h3>
+        <input type="number" id="diametroCratere" placeholder="Diametro (0 para terminar)">
+        <button onclick="contarCrateres()">Agregar cráter</button>
+        <p id="resultadoCrateres"></p>
+
+        <h3>4. Identificar cuerpo celeste (SWITCH)</h3>
+        <input type="number" id="codigoCuerpo" placeholder="Código 1-5">
+        <button onclick="identificarCuerpo()">Identificar</button>
+        <p id="resultadoCuerpo"></p>
+
+        <h3>5. Registrar niveles de luz (DO WHILE)</h3>
+        <input type="number" id="nivelLuz" placeholder="Nivel de luz">
+        <button onclick="registrarLuz()">Agregar nivel</button>
+        <p id="resultadoLuz"></p>
+    </div>
+
+    <div id="medioambiente" style="display:none;">
+        <h2>Medio Ambiente</h2>
+        <h3>1. Clasificación de calidad del aire (IF)</h3>
+        <input type="number" id="aqi" placeholder="Ingresa AQI">
+        <button onclick="clasificarAQI()">Clasificar</button>
+        <p id="resultadoAQI"></p>
+
+        <h3>2. Promedio de niveles de ruido (FOR)</h3>
+        <input type="number" id="numMediciones" placeholder="mediciones">
+        <button onclick="promedioRuido()">Calcular promedio</button>
+        <p id="resultadoRuido"></p>
+
+        <h3>3. Contar focos de calor (WHILE)</h3>
+        <input type="number" id="temperatura" placeholder="Temperatura (0 para terminar)">
+        <button onclick="contarFocos()">Agregar tempratura</button>
+        <p id="resultadoFocos"></p>
+
+        <h3>4. Clasificación de residuos (SWITCH)</h3>
+        <input type="number" id="codigoResiduo" placeholder="1-4">
+        <button onclick="clasificarResiduo()">Clasificar</button>
+        <p id="resultadoResiduo"></p>
+
+        <h3>5. Monitoreo del rio (DO WHILE)</h3>
+        <input type="number" id="nivelRio" placeholder="Nivel del rio (m)">
+        <button onclick="registrarRio()">Agregar nivel</button>
+        <p id="resultadoRio"></p>
+    </div>
+
+    <div id="salud" style="display:none;">
+        <h2>Salud</h2>
+        <h3>1. Clasificacion presión arterial (IF)</h3>
+        <input type="number" id="sistolica" placeholder="Sistolica">
+        <input type="number" id="diastolica" placeholder="Diatólica">
+        <button onclick="clasificarPresion()">Clasificar</button>
+        <p id="resultadoPresion"></p>
+
+        <h3>2. Promedio de temperatura (FOR)</h3>
+        <input type="number" id="numPacientes" placeholder="Numero de pacientes">
+        <button onclick="promedioTemperatura()">Calcular promedio</button>
+        <p id="resultadoTemp"></p>
+
+        <h3>3. Contar pacientes con fiebre (WHILE)</h3>
+        <input type="number" id="tempPaciente" placeholder="Temperatura (0 para terminar)">
+        <button onclick="contarFiebre()">Agregar temperatura</button>
+        <p id="resultadoFiebre"></p>
+
+        <h3>4. Clasificación TRIAGE (SWITCH)</h3>
+        <input type="number" id="codigoTriage" placeholder="Código 1-4">
+        <button onclick="clasificarTriage()">Clasificar</button>
+        <p id="resultadoTriage"></p>
+
+        <h3>5. Registrar saturacion SpO₂ (DO WHILE)</h3>
+        <input type="number" id="saturacion" placeholder="Saturación ">
+        <button onclick="registrarSPO2()">Agregar valor</button>
+        <p id="resultadoSPO2"></p>
+    </div>
+
+    <script>
+        function mostrar(seccion) {
+            document.getElementById("astronomia").style.display = "none";
+            document.getElementById("medioambiente").style.display = "none";
+            document.getElementById("salud").style.display = "none";
+            document.getElementById(seccion).style.display = "block";
+        }
+
+        function clasificarBrillo() {
+            let magnitud = parseFloat(document.getElementById("magnitud").value);
+            let resultado = "", plus = "";
+            if (magnitud < 0) { resultado = "Extremadamente brillante"; plus="Muy intensa";}
+            else if (magnitud < 2) { resultado = "Muy brillante"; plus="para simple vista";}
+            else if (magnitud < 4) { resultado = "Brillante"; }
+            else if (magnitud < 6) { resultado = "Débil"; plus="es muy débil";}
+            else { resultado = "No visible"; plus="Necesitas telescopio ";}
+            document.getElementById("resultadoBrillo").innerText = `${resultado}. ${plus}`;
+        }
+
+        let distancias = [];
+        function promedioDistancias() {
+            let num = parseInt(document.getElementById("numPlanetas").value);
+            let total=0; distancias=[];
+            for(let i=0;i<num;i++){
+                let d=parseFloat(prompt(`Distancia del planeta ${i+1} (millones km)`));
+                distancias.push(d); total+=d;
+            }
+            let promedio = total/num;
+            let plus=`Más cercano: ${Math.min(...distancias)}, más lejano: ${Math.max(...distancias)}`;
+            document.getElementById("resultadoDistancias").innerText=`Distancias: ${distancias.join(", ")}. Promedio: ${promedio.toFixed(2)}. ${plus}`;
+        }
+
+        let contadorCratere=0;
+        function contarCrateres(){
+            let diam=parseFloat(document.getElementById("diametroCratere").value);
+            if(diam===0){
+                let plus=contadorCratere>5?"Muchos cráteres ":"Número normal.";
+                document.getElementById("resultadoCrateres").innerText=`Total cráteres>50km: ${contadorCratere}. ${plus}`;
+                contadorCratere=0;
+            } else { if(diam>50)contadorCratere++; document.getElementById("resultadoCratere").innerText="Cráter agregado Clic 0 para total.";}
+            document.getElementById("diametroCratere").value="";
+        }
+
+        function identificarCuerpo(){
+            let codigo=parseInt(document.getElementById("codigoCuerpo").value);
+            let res="", plus="";
+            switch(codigo){
+                case 1: res="Estrella"; plus="Brilla "; break;
+                case 2: res="Planeta"; plus="Refleja luz "; break;
+                case 3: res="Cometa"; plus="visible"; break;
+                case 4: res="Asteroide"; plus="Roca pequeña "; break;
+                case 5: res="Galaxia"; plus="Millones de estrellas"; break;
+                default: res="Código inválido"; break;
+            }
+            document.getElementById("resultadoCuerpo").innerText=`${res}. ${plus}`;
+        }
+
+        let nivelesLuz=[];
+        function registrarLuz(){
+            let lux=parseFloat(document.getElementById("nivelLuz").value);
+            nivelesLuz.push(lux);
+            let msg=lux<5?"Noche sin luna":""; 
+            let plus=lux>1000?"mucha luz":lux<50?" Luz baja":"";
+            document.getElementById("resultadoLuz").innerText=`Niveles: ${nivelesLuz.join(", ")}. ${msg} ${plus}`;
+            document.getElementById("nivelLuz").value="";
+        }
+
+        function clasificarAQI(){
+            let aqi=parseFloat(document.getElementById("aqi").value);
+            let res="", plus="";
+            if(aqi<=50){res="Bueno"; plus="bueno para el exterior ";}
+            else if(aqi<=100){res="Moderado";}
+            else if(aqi<=150){res="Dañino "; plus="no actividades prolongadas";}
+            else if(aqi<=200){res="Dañino";}
+            else if(aqi<=300){res="Muy dañino"; plus="Se recomienda quedarse en casa";}
+            else{res="Peligroso"; plus="Alerta, Riesgo para todos";}
+            document.getElementById("resultadoAQI").innerText=`${res}. ${plus}`;
+        }
+
+        let nivelesRuido=[];
+        function promedioRuido(){
+            let num=parseInt(document.getElementById("numMediciones").value);
+            let total=0; nivelesRuido=[];
+            for(let i=0;i<num;i++){
+                let n=parseFloat(prompt(`Nivel de ruido ${i+1} (dB)`));
+                nivelesRuido.push(n); total+=n;
+            }
+            let promedio=total/num;
+            let plus=promedio>85?"Ruido alto, Puede afectar la salud":"Nivel de ruido aceptable";
+            document.getElementById("resultadoRuido").innerText=`Niveles: ${nivelesRuido.join(", ")}. Promedio: ${promedio.toFixed(2)} dB. ${plus}`;
+        }
+
+        let contadorFocos=0;
+        function contarFocos(){
+            let temp=parseFloat(document.getElementById("temperatura").value);
+            if(temp===0){
+                let plus=contadorFocos>3?"Muchos focos de calor":"Número normal de focos";
+                document.getElementById("resultadoFocos").innerText=`Total focos>45°C: ${contadorFocos}. ${plus}`;
+                contadorFocos=0;
+            } else { if(temp>45)contadorFocos++; document.getElementById("resultadoFocos").innerText="Temperatura agregada,Clic 0 para total.";}
+            document.getElementById("temperatura").value="";
+        }
+
+        function clasificarResiduo(){
+            let codigo=parseInt(document.getElementById("codigoResiduo").value);
+            let res="", plus="";
+            switch(codigo){
+                case 1: res="Orgánico"; plus="Se puede compostar"; break;
+                case 2: res="Plástico"; plus="Reciclar"; break;
+                case 3: res="Papel/Cartón"; plus="Reciclable"; break;
+                case 4: res="Vidrio"; plus="Reciclable"; break;
+                default: res="Código inválido"; break;
+            }
+            document.getElementById("resultadoResiduo").innerText=`${res}. ${plus}`;
+        }
+
+        let nivelesRio=[];
+        function registrarRio(){
+            let nivel=parseFloat(document.getElementById("nivelRio").value);
+            nivelesRio.push(nivel);
+            let msg=nivel>3?"Malo para el río":""; 
+            document.getElementById("resultadoRio").innerText=`Niveles registrados: ${nivelesRio.join(", ")}. ${msg}`;
+            document.getElementById("nivelRio").value="";
+        }
+
+        function clasificarPresion(){
+            let s=parseFloat(document.getElementById("sistolica").value);
+            let d=parseFloat(document.getElementById("diastolica").value);
+            let res="", plus="";
+            if(s<120 && d<80){res="Normal";}
+            else if(s<130 && d<80){res="Elevada";}
+            else if(s<140 || d<90){res="HTA grado 1";}
+            else{res="HTA grado 2"; plus="Consulta médica recomendada";}
+            document.getElementById("resultadoPresion").innerText=`${res}. ${plus}`;
+        }
+
+        let tempPacientes=[];
+        function promedioTemperatura(){
+            let num=parseInt(document.getElementById("numPacientes").value);
+            tempPacientes=[]; let total=0;
+            for(let i=0;i<num;i++){
+                let t=parseFloat(prompt(`Temperatura paciente ${i+1}`));
+                tempPacientes.push(t); total+=t;
+            }
+            let promedio=total/num;
+            let plus=promedio>=38?"Promedio de fiebre alto":"Temperatura normal";
+            document.getElementById("resultadoTemp").innerText=`Temperaturas: ${tempPacientes.join(", ")}. Promedio: ${promedio.toFixed(1)}°C. ${plus}`;
+        }
+
+        let contadorFiebre=0;
+        function contarFiebre(){
+            let t=parseFloat(document.getElementById("tempPaciente").value);
+            if(t===0){
+                let plus=contadorFiebre>2?"Muchos pacientes con fiebre":"Número normal de fiebre";
+                document.getElementById("resultadoFiebre").innerText=`Total pacientes con fiebre ≥38°C: ${contadorFiebre}. ${plus}`;
+                contadorFiebre=0;
+            } else { if(t>=38)contadorFiebre++; document.getElementById("resultadoFiebre").innerText="Temperatura agregada, clic 0 para total.";}
+            document.getElementById("tempPaciente").value="";
+        }
+
+        function clasificarTriage(){
+            let codigo=parseInt(document.getElementById("codigoTriage").value);
+            let res="", plus="";
+            switch(codigo){
+                case 1: res="Rojo"; plus="Atención inmediata"; break;
+                case 2: res="Amarillo"; plus="Atención urgente"; break;
+                case 3: res="Verde"; plus="Atención estándar"; break;
+                case 4: res="Azul"; plus="Atención mínima"; break;
+                default: res="Código inválido"; break;
+            }
+            document.getElementById("resultadoTriage").innerText=`${res}. ${plus}`;
+        }
+
+        let saturaciones=[];
+        function registrarSPO2(){
+            let s=parseFloat(document.getElementById("saturacion").value);
+            saturaciones.push(s);
+            let plus=s<90?"oxígeno basico":"Nivel norml";
+            document.getElementById("resultadoSPO2").innerText=`Saturaciones: ${saturaciones.join(", ")}. ${plus}`;
+            document.getElementById("saturacion").value="";
+        }
+
+    </script>
+</body>
+</html>
